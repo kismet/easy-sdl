@@ -32,23 +32,25 @@
  * By default this crate a FRAMED window with Hardware acceleration
  * enabled, moreover this function will load all the SDL most common
  * SDL subsystem (Core, Image, and Font)
+ * <b>NOTE</b>: No lazy-loading or similar technique are used thus it may take some time
  *
  * @param title The title to assign to the widow
  * @param width Width of the window
  * @param height Height of the window
  * @param options other options to pass to SDL please refers to #SDL_init()
  * @return TRUE if and only if the initialization succeeded
+ * @since 0.1.0
  */
-bool EDL_init(char* title, int width, int height, uint32_t options );
+bool EDL_Init(char* title, int width, int height, uint32_t options );
 
 /**
- * This load a 800x600 windows with "Easy SDL" as title
- * by invoking the initEasySDL function
  *
+ * @see EDL_init(char*, int, int, uint32_t);
+ * @since 0.1.0
  */
-bool EDL_init();
+bool EDL_Init();
 
-bool freeEasySDL();
+bool EDL_Destroy();
 
 // TODO lazy loading asset
 // Easy_Asset_t* addAsset(char* path);

@@ -15,7 +15,7 @@
 #include "../include/easy_sdl.h"
 
 int main(int argc, char* argv[]) {
-    EDL_init();
+    EDL_Init();
 
     bool running = true;
     SDL_Event event;
@@ -29,5 +29,7 @@ int main(int argc, char* argv[]) {
 
 
     }
+
+    EDL_Destroy();
     return 0;
 }

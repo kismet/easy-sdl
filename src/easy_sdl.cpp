@@ -44,7 +44,7 @@ SDL_Renderer* getSDLRender() {
     return context.renderer;
 }
 
-bool freeEasySDL() {
+bool EDL_Destroy() {
     if (!(context.subsystem_sdl_loaded
         || context.subsystem_image_loaded
         || context.subsystem_ttf_loaded ) ) {
@@ -81,8 +81,9 @@ bool freeEasySDL() {
     }
     return true;
 }
-bool EDL_init( ) {
-    return EDL_init((char *)"EasySDL",
+
+bool EDL_Init( ) {
+    return EDL_Init((char *)"EasySDL",
                        (int) EASY_SDL_DEFAULT_WINDOW_HEIGHT,
                        (int) EASY_SDL_DEFAULT_WINDOW_WIDTH,
                        (uint32_t) EASY_SDL_DEFAULT_WINDOW_OPTIONS
@@ -90,7 +91,7 @@ bool EDL_init( ) {
 }
 
 
-bool EDL_init(char* title, int height, int width, uint32_t options ){
+bool EDL_Init(char* title, int height, int width, uint32_t options ){
     if ( context.subsystem_sdl_loaded ){
         return context.subsystem_sdl_loaded;
     }
