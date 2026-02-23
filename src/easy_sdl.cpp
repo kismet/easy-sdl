@@ -278,10 +278,10 @@ void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset,
         return;
     }
 
-    //TODO implement scaling
+
     SDL_FRect rect;
-    rect.w = asset->detail.image.width;
-    rect.h = asset->detail.image.height;
+    rect.w = ((float) asset->detail.image.width)*scaling;
+    rect.h = ((float) asset->detail.image.height)*scaling;
     rect.x = x;
     rect.y = y;
 
