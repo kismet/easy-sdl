@@ -14,10 +14,7 @@
 
 #include "../include/easy_sdl.h"
 #include "../include/easy_sdl_internal.h"
-#include <cstring>
-#include <iostream>
-
-using namespace std;
+#include <stdlib.h>
 
 typedef struct Easy_SDL_Context {
     SDL_Renderer* renderer = NULL;
