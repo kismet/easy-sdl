@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "../include/easy_sdl.h"
+#include "../include/easy_sdl_internal.h"
 #include <cstring>
 #include <iostream>
 
@@ -140,14 +141,14 @@ bool EDL_Init(char* title, int height, int width, uint32_t options ){
     }
 }
 
-Easy_Asset_t* getAssetById(uint16_t id){
+Easy_Asset_t* EDL_GetAssetById(uint16_t id){
     if(id >= context.n_assets )
         return NULL;
 
     return &(context.assets[id]);
 }
 
-Easy_Asset_t* loadAsset(char* path){
+Easy_Asset_t* EDL_LoadAsset(char* path){
     Easy_Asset_t* t = isAssetAlreadyLoaded(path);
     if (t != NULL) return t;
     cerr<<"The asset:"<<path<<endl;

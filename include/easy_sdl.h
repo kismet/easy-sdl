@@ -55,7 +55,7 @@ bool EDL_Destroy();
 // TODO lazy loading asset
 // Easy_Asset_t* addAsset(char* path);
 
-Easy_Asset_t* loadAsset(char* path);
+Easy_Asset_t* EDL_LoadAsset(char* path);
 
 /**
  * This function returns a loaded Asset (eventually it will try to load it)
@@ -63,18 +63,7 @@ Easy_Asset_t* loadAsset(char* path);
  * @param id the id that represents the asset to require
  * @return the Asset matching the id or NULL if none is found
  */
-Easy_Asset_t* getAssetById(uint16_t id);
-
-/**
- * Load a Font as Assets and return it, otherwise it will delete
- *
- *
- * @param path
- * @return
- */
-Easy_Asset_t* loadFont(char* path);
-
-Easy_Asset_t* loadImage(char* path);
+Easy_Asset_t* EDL_GetAssetById(uint16_t id);
 
 void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset, uint16_t rotation, float scaling);
 
