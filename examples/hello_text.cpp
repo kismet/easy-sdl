@@ -36,9 +36,9 @@ int main(int argc, char* argv[]) {
                     running = false;
                 }
         }
-        SDL_RenderClear(getSDLRender());
+        EDL_FrameClear();
         EDL_DrawText(50,50,"Writing with EDL!");
-        SDL_RenderPresent(getSDLRender());
+        EDL_FramePresent();
     }
 
     EDL_Destroy();

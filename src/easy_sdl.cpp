@@ -359,3 +359,16 @@ void EDL_SetTextStyle(TextStyle_t* style){
 TextStyle_t* EDL_GetTextStyle(){
     return context.text_style;
 }
+
+bool EDL_FrameClear() {
+    if(context.renderer != NULL && context.window != NULL) {
+        return SDL_RenderClear(context.renderer);
+    }
+    return false;
+}
+bool EDL_FramePresent() {
+    if(context.renderer != NULL && context.window != NULL) {
+        return SDL_RenderPresent(context.renderer);
+    }
+    return false;
+}

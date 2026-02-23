@@ -101,6 +101,9 @@ void EDL_DrawText(uint16_t x, uint16_t y, char *);
  */
 void EDL_DrawText(uint16_t x, uint16_t y, uint16_t w, uint16_t h, char *, uint32_t options);
 
+
+bool EDL_FrameClear();
+bool EDL_FramePresent();
 /**
  * The following section contains function that allows the developer
  * to access the SDL layer for using specific function that are not

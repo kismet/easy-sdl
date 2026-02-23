@@ -38,10 +38,12 @@ int main(int argc, char* argv[]) {
                 running = false;
                 }
         }
-        SDL_RenderClear(getSDLRender());
+        EDL_FrameClear();
+
         EDL_DrawAsset(100,100,img,0,0.1f);
         EDL_DrawAsset(200,200,img2,0,0.1f);
-        SDL_RenderPresent(getSDLRender());
+
+        EDL_FramePresent();
     }
 
     EDL_Destroy();
