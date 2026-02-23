@@ -97,7 +97,7 @@ bool EDL_Init(char* title, int height, int width, uint32_t options ){
         return context.subsystem_sdl_loaded;
     }
     if ( SDL_Init( SDL_INIT_EVENTS ) < 0 ) {
-        cerr<< "Error initializing SDL: " << SDL_GetError() << endl;
+        SDL_Log("Error initializing SDL: %s", SDL_GetError());
         return false;
     } else {
         //FIXME us a local_cleanup() that cleans loaded subsystem;
@@ -105,7 +105,7 @@ bool EDL_Init(char* title, int height, int width, uint32_t options ){
     }
 
     if ( TTF_Init() < 0 ){
-        cerr << "Error initializing TTF Failed: " <<  SDL_GetError() << endl;
+        SDL_Log( "Error initializing TTF Failed: %s", SDL_GetError());
         return false;
     } else {
         //FIXME us a local_cleanup() that cleans loaded subsystem;
@@ -124,7 +124,7 @@ bool EDL_Init(char* title, int height, int width, uint32_t options ){
         context.window = w;
         context.renderer = r;
     } else {
-        cerr << "Error getting renderer: " << SDL_GetError() << endl;
+        SDL_Log ( "Error getting renderer: %s" ,SDL_GetError());
         return false;
     }
 
@@ -151,14 +151,12 @@ Easy_Asset_t* EDL_GetAssetById(uint16_t id){
 Easy_Asset_t* EDL_LoadAsset(char* path){
     Easy_Asset_t* t = isAssetAlreadyLoaded(path);
     if (t != NULL) return t;
-    cerr<<"The asset:"<<path<<endl;
-    cerr<<" is not part of our cache, we have to load it"<<endl;
+    SDL_Log("The asset:%s is not part of the cache, loading it");
 
 
     t = loadImage(path);
     if (t != NULL) return t;
-    cerr<<"We failed to load the file:"<<path<<endl;
-    cerr<<" as IMAGE we try as FONT"<<endl;
+    SDL_Log("We failed to load as IMAGE the Asset at:%s, trying again as FONT");
 
     t = loadFont(path);
     return t;
@@ -174,13 +172,14 @@ Easy_Asset_t * isAssetAlreadyLoaded(char* path){
 
 bool canLoadAsset(){
     if ( context.renderer == NULL ) {
-        cerr << "No valid render. Assets cannot be loaded! Please invoke ??? first" << endl;
+        SDL_Log("No valid render active. Assets cannot be loaded! Function EDL_init() must be invoked before this");
         return false;
     }
 
     if( context.n_assets == context.max_assets ){
         //TODO increase number of assets
-        cerr<<"No more space for loading assets. Dynamic assets memories will fixed in next release"<<endl;
+        //TODO defining a policies for unloading assets
+        SDL_Log("FATAL ERROR! No more space for loading assets. Assets loading/unloading planned for next releases");
         return false;
     }
     return true;
@@ -198,9 +197,9 @@ Easy_Asset_t* loadFont(char* path){
     TTF_Font* font = TTF_OpenFont(path, EASY_SDL_DEFAULT_FONT_SIZE);
 
     if(!font){
-        cerr<<"Unable to open font "<<path
-            <<" Please check that file exits."<<endl
-            <<"SDL says:"<<SDL_GetError()<<endl<<endl;
+        SDL_Log(
+            "We failed to load the FONT at: %s Please check that file exits. SDL says:%s",
+            path, SDL_GetError());
         return NULL;
     }
     asset = &(context.assets[context.n_assets]);
@@ -236,17 +235,17 @@ Easy_Asset_t* loadImage(char* path){
         return asset; // Asset already loaded
     }
     if (!canLoadAsset()) {
-        cerr << "Cannot load asset: asset array is full or renderer is null." << endl;
+        SDL_Log("Cannot load asset: asset array is full or renderer is null.");
         return NULL;
     }
     SDL_Surface* image = IMG_Load(path);
     if (!image) {
-        cerr << "Unable to load image " << path << ". SDL Error: " << SDL_GetError() << endl;
+        SDL_Log("Unable to load image %s. SDL says: ",path,  SDL_GetError());
         return NULL;
     }
     SDL_Texture* texture = SDL_CreateTextureFromSurface(context.renderer, image);
     if (!texture) {
-        cerr << "Unable to create texture from image. SDL Error: " << SDL_GetError() << endl;
+        SDL_Log("Unable to create texture from image. SDL says: %s" ,SDL_GetError());
         SDL_DestroySurface(image); // Free the surface to avoid memory leak
         return NULL;
     }
@@ -265,17 +264,16 @@ Easy_Asset_t* loadImage(char* path){
 void EDL_DrawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset,
                uint16_t rotation, float scaling) {
     if (context.renderer == NULL) {
-        cerr << "NULL Render we cannot perform drawAsset(...), "
-                "please execute initEasySDL(...) before using this function" << endl;
+        SDL_Log("FATAL ERROR: NULL Render we cannot perform EDL_DrawAsset(...) please inti the library wiht EDL_Init()");
     }
 
     if (asset == NULL) {
-        cerr << "NULL asset we cannot perform drawAsset(...)"<<endl;
+        SDL_Log("FATAL ERROR: NULL Asset, thus nothing to draw");
         return;
     }
 
     if (asset->type != ASSET_IMAGE){
-        cerr << "Asset is not an image drawAsset(...) nothing to perform"<<endl;
+        SDL_Log("FATAL ERROR: Asset is not a IMAGE, thus nothing to draw");
         return;
     }
 
@@ -313,21 +311,21 @@ void EDL_DrawText(uint16_t x, uint16_t y, uint16_t w, uint16_t h, char* txt, uin
     SDL_Surface* text;
     //TODO Set all the font style, at the moment only the color is set
     if ( context.text_style == NULL || context.text_style->font == NULL ){
-        cerr << "No valid TEXT STYLE SET, we cannot write text";
+        SDL_Log("FATAL ERROR: No valid TEXT_STYLE, please set it with EDL_SetTextStyle");
         return;
     }
     TTF_Font* font = context.text_style->font->detail.font.font;
     TTF_SetFontSize(font,context.text_style->size);
     text = TTF_RenderText_Solid(font, txt, 0, context.text_style->foreground );
     if ( !text ) {
-        cout << "Failed to render text: " << SDL_GetError() << endl;
+        SDL_Log("FATAL ERROR: Failed to render text. SDL says: %s",SDL_GetError());
     }
 
     SDL_Texture* texture;
     texture = SDL_CreateTextureFromSurface( context.renderer, text );
 
     //dst dichiarata in stack
-    SDL_FRect dst = { x, y, text->w, text->h };
+    SDL_FRect dst = { (float)x, (float)y, (float)text->w, (float)text->h };
     if ( w != 0 || h !=0 ){
         dst.w = w;
         dst.h = h;
@@ -343,7 +341,7 @@ void EDL_DrawText(uint16_t x, uint16_t y, uint16_t w, uint16_t h, char* txt, uin
     SDL_RenderTexture( context.renderer, texture, NULL, &(boxes[currentBox]) );
     currentBox = ( currentBox + 1 ) % N_BOXES;
     if( currentBox == 0 ){
-        cerr<<"We run out of box... Oh My God!";
+        SDL_Log("WARNING: We are running out of bounding box...Behavior unexpteced!");
     }
     SDL_DestroyTexture(texture);
     SDL_DestroySurface(text);
