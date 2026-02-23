@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.28)
-project(space_invaders)
+project(easy_sdl)
 
 set(BUILD_SHARED_LIBS OFF)
 set(SDL3_DIR libs/SDL3-3.4.0/cmake/)
 set(SDL3_image_DIR libs/SDL3_image-3.4.0/cmake)
 set(SDL3_ttf_DIR libs/SDL3_ttf-3.2.2/cmake)
-set(CMAKE_C_FLAGS " -Wnarrowing ")
 set(CMAKE_CXX_STANDARD 17)
 
 # Link statico per runtime GCC
