@@ -17,14 +17,14 @@
 int main(int argc, char* argv[]) {
     EDL_Init();
 
-    Easy_Asset_t * img = loadAsset("assets/1.png");
+    Easy_Asset_t * img = EDL_LoadAsset("assets/1.png");
     if(img == NULL ) {
-        img = loadAsset("../assets/1.png");
+        img = EDL_LoadAsset("../assets/1.png");
     }
 
-    Easy_Asset_t * img2 = loadAsset("assets/2.png");
+    Easy_Asset_t * img2 = EDL_LoadAsset("assets/2.png");
     if(img2 == NULL ) {
-        img2 = loadAsset("../assets/2.png");
+        img2 = EDL_LoadAsset("../assets/2.png");
     }
 
 

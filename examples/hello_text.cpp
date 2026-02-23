@@ -17,9 +17,9 @@
 int main(int argc, char* argv[]) {
     EDL_Init();
 
-    Easy_Asset_t * font = loadAsset("assets/fonts/CrayonLibre-Regular.ttf");
+    Easy_Asset_t * font = EDL_LoadAsset("assets/fonts/CrayonLibre-Regular.ttf");
     if(font == NULL ) {
-        font = loadAsset("../assets/fonts/CrayonLibre-Regular.ttf");
+        font = EDL_LoadAsset("../assets/fonts/CrayonLibre-Regular.ttf");
     }
     TextStyle_t style;
     style.font = font;
