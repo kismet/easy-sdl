@@ -76,14 +76,14 @@ void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset);
  *
  * @param style
  */
-void setTextStyle(TextStyle_t* style);
+void EDL_SetTextStyle(TextStyle_t* style);
 
 /**
  * Restituisce lo stile corrente
  *
  * @return
  */
-TextStyle_t* getTextStyle();
+TextStyle_t* EDL_GetTextStyle();
 
 
 /**
@@ -91,7 +91,7 @@ TextStyle_t* getTextStyle();
  * @param x
  * @param y
  */
-void drawText(uint16_t x, uint16_t y, char *);
+void EDL_DrawText(uint16_t x, uint16_t y, char *);
 
 /**
  * Scrive il testo con lo stile corrente nella posizione (x,y) all'interno
@@ -99,7 +99,7 @@ void drawText(uint16_t x, uint16_t y, char *);
  * @param x
  * @param y
  */
-void drawText(uint16_t x, uint16_t y, uint16_t w, uint16_t h, char *, uint32_t options);
+void EDL_DrawText(uint16_t x, uint16_t y, uint16_t w, uint16_t h, char *, uint32_t options);
 
 /**
  * The following section contains function that allows the developer

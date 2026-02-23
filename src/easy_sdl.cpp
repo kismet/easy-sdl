@@ -303,13 +303,13 @@ void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset){
 }
 
 
-void drawText(uint16_t x, uint16_t y, char* txt){
-    drawText(x, y, 0,0,txt,0);
+void EDL_DrawText(uint16_t x, uint16_t y, char* txt){
+    EDL_DrawText(x, y, 0,0,txt,0);
 }
 const uint32_t N_BOXES = 1024*1024;
 SDL_FRect boxes[N_BOXES];
 uint32_t currentBox = 1;
-void drawText(uint16_t x, uint16_t y, uint16_t w, uint16_t h, char* txt, uint32_t options){
+void EDL_DrawText(uint16_t x, uint16_t y, uint16_t w, uint16_t h, char* txt, uint32_t options){
     SDL_Surface* text;
     //TODO Set all the font style, at the moment only the color is set
     if ( context.text_style == NULL || context.text_style->font == NULL ){
@@ -349,13 +349,13 @@ void drawText(uint16_t x, uint16_t y, uint16_t w, uint16_t h, char* txt, uint32_
     SDL_DestroySurface(text);
 }
 
-void setTextStyle(TextStyle_t* style){
+void EDL_SetTextStyle(TextStyle_t* style){
     if(context.text_style == NULL){
         context.text_style = (TextStyle_t *) malloc(sizeof(TextStyle_t));
     }
     memcpy(context.text_style,style,sizeof(TextStyle_t));
 }
 
-TextStyle_t* getTextStyle(){
+TextStyle_t* EDL_GetTextStyle(){
     return context.text_style;
 }

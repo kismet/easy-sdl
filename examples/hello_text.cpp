@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     TextStyle_t style;
     style.font = font;
     style.size = 48;
-    setTextStyle(&style);
+    EDL_SetTextStyle(&style);
 
     bool running = true;
     SDL_Event event;
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
                 }
         }
         SDL_RenderClear(getSDLRender());
-        drawText(50,50,"Writing with EDL!");
+        EDL_DrawText(50,50,"Writing with EDL!");
         SDL_RenderPresent(getSDLRender());
     }
 
