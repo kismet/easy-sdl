@@ -262,7 +262,7 @@ Easy_Asset_t* loadImage(char* path){
     return asset;
 }
 
-void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset,
+void EDL_DrawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset,
                uint16_t rotation, float scaling) {
     if (context.renderer == NULL) {
         cerr << "NULL Render we cannot perform drawAsset(...), "
@@ -294,12 +294,12 @@ void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset,
         SDL_FLIP_NONE);
 }
 
-void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset, uint16_t rotation){
-    drawAsset(x,y,asset,rotation,1.0);
+void EDL_DrawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset, uint16_t rotation){
+    EDL_DrawAsset(x,y,asset,rotation,1.0);
 }
 
-void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset){
-    drawAsset(x,y,asset,0,1.0);
+void EDL_DrawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset){
+    EDL_DrawAsset(x,y,asset,0,1.0);
 }
 
 

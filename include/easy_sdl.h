@@ -65,11 +65,11 @@ Easy_Asset_t* EDL_LoadAsset(char* path);
  */
 Easy_Asset_t* EDL_GetAssetById(uint16_t id);
 
-void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset, uint16_t rotation, float scaling);
+void EDL_DrawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset, uint16_t rotation, float scaling);
 
-void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset, uint16_t rotation);
+void EDL_DrawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset, uint16_t rotation);
 
-void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset);
+void EDL_DrawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset);
 
 /**
  * Assegna lo stile e ne effettua una copia interna
