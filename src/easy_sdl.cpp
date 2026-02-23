@@ -285,6 +285,19 @@ void drawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset,
     rect.x = x;
     rect.y = y;
 
+    SDL_FRect border;
+    rect.h = ((float) asset->detail.image.height)*scaling;
+    border.x = max(0.0f,rect.x-2);
+    border.y = max(0.0f,rect.y-2);
+    border.w = rect.w + 4;
+    border.h = rect.h + 4;
+    Uint8 r, g, b, a;
+    SDL_GetRenderDrawColor(context.renderer, &r, &g, &b, &a);
+    SDL_SetRenderDrawColor(context.renderer,255,255,255,SDL_ALPHA_OPAQUE);
+    SDL_RenderFillRect(context.renderer,&border);
+    SDL_SetRenderDrawColor(context.renderer,r, g, b, a);
+    SDL_RenderFillRect(context.renderer,&rect);
+
     SDL_RenderTextureRotated(
         context.renderer,
         asset->detail.image.texture,
