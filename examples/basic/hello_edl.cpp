@@ -12,33 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "../include/easy_sdl.h"
+#include "../../include/easy_sdl.h"
 
 int main(int argc, char* argv[]) {
     EDL_Init();
 
-    Easy_Asset_t * font = EDL_LoadAsset("assets/fonts/CrayonLibre-Regular.ttf");
-    if(font == NULL ) {
-        font = EDL_LoadAsset("../assets/fonts/CrayonLibre-Regular.ttf");
-    }
-    TextStyle_t style;
-    style.font = font;
-    style.size = 48;
-    EDL_SetTextStyle(&style);
-
     bool running = true;
     SDL_Event event;
     while (running) {
-
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_EVENT_QUIT ||
                 (event.type == SDL_EVENT_KEY_DOWN && event.key.scancode == SDL_SCANCODE_ESCAPE)) {
-                    running = false;
+                running = false;
                 }
         }
-        EDL_FrameClear();
-        EDL_DrawText(50,50,"Writing with EDL!");
-        EDL_FramePresent();
+
+
     }
 
     EDL_Destroy();

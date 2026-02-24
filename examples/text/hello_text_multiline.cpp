@@ -12,19 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "../include/easy_sdl.h"
+#include "../../include/easy_sdl.h"
 
 int main(int argc, char* argv[]) {
     EDL_Init();
 
-    Easy_Asset_t * regular = EDL_LoadAsset("assets/fonts/CrayonLibre-Regular.ttf");
-    if(regular == NULL ) {
-        regular = EDL_LoadAsset("../assets/fonts/CrayonLibre-Regular.ttf");
-    }
-
-    Easy_Asset_t * space = EDL_LoadAsset("assets/fonts/SpaceNova-6Rpd1.otf");
-    if(space == NULL ) {
-        space = EDL_LoadAsset("../assets/fonts/SpaceNova-6Rpd1.otf");
+    Easy_Asset_t * font = EDL_LoadAsset("assets/fonts/CrayonLibre-Regular.ttf");
+    if(font == NULL ) {
+        font = EDL_LoadAsset("../assets/fonts/CrayonLibre-Regular.ttf");
     }
 
     //Definiamo un po' di colori
@@ -33,17 +28,16 @@ int main(int argc, char* argv[]) {
     SDL_Color blue = { 0, 0, 255 };
     SDL_Color yellow = { 255, 255, 0 };
 
-    //Definisco un primo stile regular di grande e rosso
-    TextStyle_t regularStyle;
-    regularStyle.font = regular;
-    regularStyle.size = 48;
-    regularStyle.foreground = red;
+    //Definisco un primo stile rosso e grande
+    TextStyle_t pennaRossa;
+    pennaRossa.font = font;
+    pennaRossa.size = 48;
+    pennaRossa.foreground = red;
 
-    //Definisco uno stile space cambiando font, colore e dimensione
-    TextStyle_t spaceStyle = regularStyle;
-    spaceStyle.font = space;
-    spaceStyle.size = 32;
-    spaceStyle.foreground = green;
+    //Definisco un primo stile verde e leggermente più piccolo
+    TextStyle_t pennaVerde = pennaRossa;
+    pennaVerde.size = 32;
+    pennaVerde.foreground = green;
 
     bool running = true;
     SDL_Event event;
@@ -56,9 +50,9 @@ int main(int argc, char* argv[]) {
                 }
         }
         EDL_FrameClear();
-        EDL_SetTextStyle(&regularStyle);
+        EDL_SetTextStyle(&pennaRossa);
         EDL_DrawText(50,50,"Writing with EDL!");
-        EDL_SetTextStyle(&spaceStyle);
+        EDL_SetTextStyle(&pennaVerde);
         EDL_DrawText(50,150,"Cambio il colore e la dimensione!");
         EDL_DrawText(50,250,"Ed il testo rimane del colore della penna...");
         EDL_FramePresent();

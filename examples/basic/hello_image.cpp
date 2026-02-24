@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "../include/easy_sdl.h"
+#include "../../include/easy_sdl.h"
 
 int main(int argc, char* argv[]) {
     EDL_Init();
