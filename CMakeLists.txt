@@ -14,7 +14,7 @@ find_package(SDL3 REQUIRED)
 find_package(SDL3_ttf REQUIRED)
 find_package(SDL3_image REQUIRED)
 add_library(easy_sdl src/easy_sdl.cpp
-        examples/hello_edl.cpp)
+        examples/basic/hello_edl.cpp)
 target_link_libraries(easy_sdl
         SDL3::SDL3-shared
         SDL3_ttf::SDL3_ttf-shared
@@ -22,27 +22,27 @@ target_link_libraries(easy_sdl
 )
 
 add_executable(hello_edl
-        examples/hello_edl.cpp
+        examples/basic/hello_edl.cpp
         src/easy_sdl.cpp
 )
 
 add_executable(hello_image
-        examples/hello_image.cpp
+        examples/basic/hello_image.cpp
         src/easy_sdl.cpp
 )
 
 add_executable(hello_text
-        examples/hello_text.cpp
+        examples/basic/hello_text.cpp
         src/easy_sdl.cpp
 )
 
 add_executable(hello_text_multiline
-        examples/hello_text_multiline.cpp
+        examples/text/hello_text_multiline.cpp
         src/easy_sdl.cpp
 )
 
 add_executable(hello_text_complex
-        examples/hello_text_complex.cpp
+        examples/text/hello_text_complex.cpp
         src/easy_sdl.cpp
 )
 
