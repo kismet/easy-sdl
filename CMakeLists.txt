@@ -46,6 +46,10 @@ add_executable(hello_text_complex
         src/easy_sdl.cpp
 )
 
+add_executable(hello_avatar
+        examples/event/hello_avatar.cpp
+        src/easy_sdl.cpp
+)
 target_link_libraries(hello_edl
         SDL3::SDL3-shared
         SDL3_ttf::SDL3_ttf
@@ -72,6 +76,10 @@ target_link_libraries(hello_text_multiline
 
 
 target_link_libraries(hello_text_complex
+        SDL3::SDL3-shared
+        SDL3_ttf::SDL3_ttf
+        SDL3_image::SDL3_image-shared
+)target_link_libraries(hello_avatar
         SDL3::SDL3-shared
         SDL3_ttf::SDL3_ttf
         SDL3_image::SDL3_image-shared
