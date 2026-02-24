@@ -41,6 +41,11 @@ add_executable(hello_text_multiline
         src/easy_sdl.cpp
 )
 
+add_executable(hello_text_complex
+        examples/hello_text_complex.cpp
+        src/easy_sdl.cpp
+)
+
 target_link_libraries(hello_edl
         SDL3::SDL3-shared
         SDL3_ttf::SDL3_ttf
@@ -60,6 +65,13 @@ target_link_libraries(hello_text
 )
 
 target_link_libraries(hello_text_multiline
+        SDL3::SDL3-shared
+        SDL3_ttf::SDL3_ttf
+        SDL3_image::SDL3_image-shared
+)
+
+
+target_link_libraries(hello_text_complex
         SDL3::SDL3-shared
         SDL3_ttf::SDL3_ttf
         SDL3_image::SDL3_image-shared
