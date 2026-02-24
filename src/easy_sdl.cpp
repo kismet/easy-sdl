@@ -237,7 +237,7 @@ Easy_Asset_t* loadImage(char* path){
     }
     SDL_Surface* image = IMG_Load(path);
     if (!image) {
-        SDL_Log("Unable to load image %s. SDL says: ",path,  SDL_GetError());
+        SDL_Log("Unable to load image %s. SDL says: %s",path,  SDL_GetError());
         return NULL;
     }
     SDL_Texture* texture = SDL_CreateTextureFromSurface(context.renderer, image);
