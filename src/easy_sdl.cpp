@@ -148,12 +148,12 @@ Easy_Asset_t* EDL_GetAssetById(uint16_t id){
 Easy_Asset_t* EDL_LoadAsset(char* path){
     Easy_Asset_t* t = isAssetAlreadyLoaded(path);
     if (t != NULL) return t;
-    SDL_Log("The asset:%s is not part of the cache, loading it");
+    SDL_Log("The asset:%s is not part of the cache, loading it", path);
 
 
     t = loadImage(path);
     if (t != NULL) return t;
-    SDL_Log("We failed to load as IMAGE the Asset at:%s, trying again as FONT");
+    SDL_Log("We failed to load as IMAGE the Asset at:%s, trying again as FONT",path);
 
     t = loadFont(path);
     return t;
