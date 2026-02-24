@@ -82,8 +82,8 @@ bool EDL_Destroy() {
 
 bool EDL_Init( ) {
     return EDL_Init((char *)"EasySDL",
-                       (int) EASY_SDL_DEFAULT_WINDOW_HEIGHT,
-                       (int) EASY_SDL_DEFAULT_WINDOW_WIDTH,
+                       (int) 768,
+                       (int) EDL_DEFAULT_WINDOW_WIDTH,
                        (uint32_t) EASY_SDL_DEFAULT_WINDOW_OPTIONS
     );
 }
@@ -128,7 +128,7 @@ bool EDL_Init(char* title, int height, int width, uint32_t options ){
     if (context.subsystem_sdl_loaded
     && context.subsystem_image_loaded
     && context.subsystem_ttf_loaded ) {
-        context.max_assets = EASY_SDL_DEFAULT_ASSET_SLOT;
+        context.max_assets = EDL_DEFAULT_ASSET_SLOT;
         context.assets = (Easy_Asset_t*) malloc(sizeof(Easy_Asset_t)*context.max_assets);
         context.n_assets = 0;
         return true;
