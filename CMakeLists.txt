@@ -56,6 +56,10 @@ add_executable(hello_avatar_moving
         src/easy_sdl.cpp
 )
 
+add_executable(hello_text_fps
+        examples/text/hello_text_fps.cpp
+        src/easy_sdl.cpp
+)
 
 target_link_libraries(hello_edl
         SDL3::SDL3-shared
@@ -95,6 +99,12 @@ target_link_libraries(hello_avatar
 )
 
 target_link_libraries(hello_avatar_moving
+        SDL3::SDL3-shared
+        SDL3_ttf::SDL3_ttf
+        SDL3_image::SDL3_image-shared
+)
+
+target_link_libraries(hello_text_fps
         SDL3::SDL3-shared
         SDL3_ttf::SDL3_ttf
         SDL3_image::SDL3_image-shared
