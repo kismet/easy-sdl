@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
         }
         EDL_FrameClear();
 
-        EDL_DrawAsset(player.x,player.y,rocket,0,0.1f);
+        EDL_DrawAsset(player.x,player.y,player.avatar,0,0.1f);
 
         EDL_FramePresent();
     }
