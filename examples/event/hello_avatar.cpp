@@ -31,7 +31,10 @@ int main(int argc, char* argv[]) {
         rocket = EDL_LoadAsset("../assets/1.png");
     }
     player.avatar = rocket;
+    player.x = 0;
+    player.y = 0;
 
+    int const SPACESHIP_SPEED = 10;
 
     bool running = true;
     SDL_Event event;
@@ -46,21 +49,21 @@ int main(int argc, char* argv[]) {
             if (event.type == SDL_EVENT_KEY_DOWN ) {
                 switch (event.key.scancode) {
                     case SDL_SCANCODE_A: case SDL_SCANCODE_LEFT:
-                        player.x -= 1;
+                        player.x -= SPACESHIP_SPEED;
                         if (player.x < 0) player.x = 0;
                         break;
 
                     case SDL_SCANCODE_D: case SDL_SCANCODE_RIGHT:
-                        player.x += 1;
+                        player.x += SPACESHIP_SPEED;
                         break;
 
                     case SDL_SCANCODE_W: case SDL_SCANCODE_UP:
-                        player.y -= 1;
+                        player.y -= SPACESHIP_SPEED;
                         if (player.y < 0) player.y = 0;
                         break;
 
                     case SDL_SCANCODE_S: case SDL_SCANCODE_DOWN:
-                        player.y += 1;
+                        player.y += SPACESHIP_SPEED;
                         break;
                 }
             }
