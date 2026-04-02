@@ -28,6 +28,11 @@ typedef struct Easy_SDL_Context {
     TextStyle_t* text_style = NULL;
 } Easy_SDL_Context_t;
 
+const uint32_t N_BOXES = 1024;
+SDL_FRect boxes[N_BOXES];
+uint32_t currentBox = 1;
+
+
 static Easy_SDL_Context_t context;
 
 static int findAssetByName(char* path);
@@ -301,9 +306,7 @@ void EDL_DrawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset){
 void EDL_DrawText(uint16_t x, uint16_t y, char* txt){
     EDL_DrawText(x, y, 0,0,txt,0);
 }
-const uint32_t N_BOXES = 1024*1024;
-SDL_FRect boxes[N_BOXES];
-uint32_t currentBox = 1;
+
 void EDL_DrawText(uint16_t x, uint16_t y, uint16_t w, uint16_t h, char* txt, uint32_t options){
     SDL_Surface* text;
     //TODO Set all the font style, at the moment only the color is set
