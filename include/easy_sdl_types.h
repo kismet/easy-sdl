@@ -21,6 +21,11 @@
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
+#include "SDL3_mixer/SDL_mixer.h"
+
+typedef struct Audio_Asset {
+    MIX_Audio* audio;
+} Audio_Asset_t;
 
 typedef struct Image_Asset {
     uint16_t height;
@@ -42,12 +47,13 @@ typedef enum Text_Options{
 } Text_Options_t;
 
 typedef enum Asset_Type{
-    ASSET_IMAGE, ASSET_FONT
+    ASSET_IMAGE, ASSET_FONT, ASSET_AUDIO
 } Asset_Type_t;
 
 typedef union Easy_Asset_Union {
     Image_Asset_t image;
     Font_Asset_t font;
+    Audio_Asset_t sound;
 } Easy_Asset_Union_t;
 
 
