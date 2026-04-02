@@ -31,6 +31,11 @@ add_executable(hello_edl
         src/easy_sdl.cpp
 )
 
+add_executable(hello_audio
+        examples/basic/hello_audio.cpp
+        src/easy_sdl.cpp
+)
+
 add_executable(hello_image
         examples/basic/hello_image.cpp
         src/easy_sdl.cpp
@@ -71,6 +76,14 @@ target_link_libraries(hello_edl
         SDL3_ttf::SDL3_ttf
         SDL3_image::SDL3_image-shared
 )
+
+target_link_libraries(hello_audio
+        SDL3::SDL3-shared
+        SDL3_ttf::SDL3_ttf
+        SDL3_image::SDL3_image-shared
+        SDL3_mixer::SDL3_mixer-shared
+)
+
 
 target_link_libraries(hello_image
         SDL3::SDL3-shared
