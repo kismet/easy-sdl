@@ -15,17 +15,21 @@
 #include "../include/easy_sdl.h"
 #include "../include/easy_sdl_internal.h"
 #include <stdlib.h>
+#include <SDL3_mixer/SDL_mixer.h>
 
 typedef struct Easy_SDL_Context {
     SDL_Renderer* renderer = NULL;
     SDL_Window* window = NULL;
+    SDL_AudioStream* stream = NULL;
     bool subsystem_sdl_loaded = false;
     bool subsystem_image_loaded = false;
     bool subsystem_ttf_loaded = false;
+    bool subsystem_audio_loaded = false;
     uint16_t n_assets = 0;
     uint16_t max_assets = 0;
     Easy_Asset_t* assets = NULL;
     TextStyle_t* text_style = NULL;
+    MIX_Mixer* mixer = NULL;
 } Easy_SDL_Context_t;
 
 const uint32_t N_BOXES = 1024;
@@ -38,6 +42,8 @@ static Easy_SDL_Context_t context;
 static int findAssetByName(char* path);
 static bool canLoadAsset();
 static Easy_Asset_t * isAssetAlreadyLoaded(char* path);
+
+Easy_Asset_t* loadAudio(char* path);
 
 SDL_Window* getSDLWindow(){
     return context.window;
@@ -93,7 +99,6 @@ bool EDL_Init( ) {
     );
 }
 
-
 bool EDL_Init(char* title, int height, int width, uint32_t options ){
     if ( context.subsystem_sdl_loaded ){
         return context.subsystem_sdl_loaded;
@@ -113,6 +118,16 @@ bool EDL_Init(char* title, int height, int width, uint32_t options ){
         //FIXME us a local_cleanup() that cleans loaded subsystem;
         context.subsystem_ttf_loaded = true;
     }
+
+    if ( MIX_Init() < 0 ) {
+        SDL_Log( "Error initializing Mix Failed: %s", SDL_GetError());
+        return false;
+    } else {
+        //FIXME we should cleanup the subsystem;
+        context.subsystem_audio_loaded = true;
+    }
+
+    context.mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK ,NULL);
 
     //Since SDL3 IMG subsystem is loaded and unloaded by itself
     context.subsystem_image_loaded = true;
@@ -160,6 +175,11 @@ Easy_Asset_t* EDL_LoadAsset(char* path){
     if (t != NULL) return t;
     SDL_Log("We failed to load as IMAGE the Asset at:%s, trying again as FONT",path);
 
+    t = loadAudio(path);
+    if (t != NULL) return t;
+    SDL_Log("We failed to load as AUDIO the Asset at:%s, trying again as FONT",path);
+
+
     t = loadFont(path);
     return t;
 }
@@ -177,6 +197,10 @@ bool canLoadAsset(){
         SDL_Log("No valid render active. Assets cannot be loaded! Function EDL_init() must be invoked before this");
         return false;
     }
+    if ( context.mixer == NULL ) {
+        SDL_Log("No valid MIXER active. Assets cannot be loaded! Function EDL_init() must be invoked before this");
+        return false;
+    }
 
     if( context.n_assets == context.max_assets ){
         //TODO increase number of assets
@@ -185,6 +209,40 @@ bool canLoadAsset(){
         return false;
     }
     return true;
+}
+
+Easy_Asset_t* loadAudio(char* path) {
+    Easy_Asset_t* asset = isAssetAlreadyLoaded(path);
+    if( asset != NULL ){
+        return asset;
+    }
+    if(!canLoadAsset()){
+        return NULL;
+    }
+
+    MIX_Audio* audio = MIX_LoadAudio(context.mixer, path, true);
+    if(!audio){
+        SDL_Log(
+            "We failed to load the FONT at: %s Please check that file exits. SDL says:%s",
+            path, SDL_GetError());
+        return NULL;
+    }
+
+    asset = &(context.assets[context.n_assets]);
+    asset->detail.sound.audio = audio;
+    asset->type = ASSET_AUDIO;
+    asset->loaded = true;
+    asset->id = context.n_assets;
+    //asset->origin = (char *) malloc(strlen(path)); this code generates segmentation fault
+    asset->origin = (char *) malloc(strlen(path) + 1); //We need to add '+1' for storing '\0'
+    //if the above code crashes please use strdup
+    strcpy(asset->origin,path);
+    context.n_assets++;
+
+    //TODO init name
+    return asset;
+
+
 }
 
 Easy_Asset_t* loadFont(char* path){
@@ -261,6 +319,18 @@ Easy_Asset_t* loadImage(char* path){
     asset->origin = strdup(path); // Use strdup to simplify memory management
     context.n_assets++;
     return asset;
+}
+
+void EDL_Play(Easy_Asset_t *audio) {
+    if (context.mixer == NULL) {
+        SDL_Log("FATAL ERROR: NULL Miexer we cannot perform EDL_Play(...) please inti the library wiht EDL_Init()");
+        return;
+    }
+    if (audio == NULL) {
+        SDL_Log("FATAL ERROR: NULL Asset, thus nothing to play");
+        return;
+    }
+    MIX_PlayAudio(context.mixer, audio->detail.sound.audio);
 }
 
 void EDL_DrawAsset(uint16_t x, uint16_t y, Easy_Asset_t* asset,

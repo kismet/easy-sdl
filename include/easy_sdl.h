@@ -101,6 +101,7 @@ void EDL_DrawText(uint16_t x, uint16_t y, char *);
  */
 void EDL_DrawText(uint16_t x, uint16_t y, uint16_t w, uint16_t h, char *, uint32_t options);
 
+void EDL_Play(Easy_Asset_t* audio);
 
 bool EDL_FrameClear();
 bool EDL_FramePresent();
